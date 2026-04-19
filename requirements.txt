@@ -1,2 +1,2 @@
-litellm
+litellm[proxy]
 google-cloud-aiplatform
