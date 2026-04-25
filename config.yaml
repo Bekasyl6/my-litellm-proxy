@@ -5,6 +5,12 @@ model_list:
       vertex_project: "roleplaying-488810"
       vertex_location: "global"
 
+  - model_name: claude-opus-4-7
+    litellm_params:
+      model: vertex_ai/claude-opus-4-7 
+      vertex_project: "roleplaying-488810"
+      vertex_location: "global" 
+ 
 litellm_settings:
   drop_params: true
   cors: true
