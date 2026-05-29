@@ -2,13 +2,13 @@ model_list:
   - model_name: gemini-3.1-pro
     litellm_params:
       model: vertex_ai/gemini-3.1-pro-preview
-      vertex_project: "roleplaying-488810"
+      vertex_project: "project-f55a1d6d-da78-42c7-a77"
       vertex_location: "global"
 
   - model_name: gemini-3.5-flash
     litellm_params:
       model: vertex_ai/gemini-3.5-flash 
-      vertex_project: "roleplaying-488810"
+      vertex_project: "project-f55a1d6d-da78-42c7-a77"
       vertex_location: "global" 
  
 litellm_settings:
