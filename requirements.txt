@@ -1,2 +1,2 @@
-litellm[proxy]==1.95.0
+litellm[proxy]
 google-cloud-aiplatform
