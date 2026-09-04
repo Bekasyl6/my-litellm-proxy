@@ -5,9 +5,9 @@ model_list:
       vertex_project: "janitor-api-or-wtv"
       vertex_location: "global"
 
-  - model_name: gemini-3.7-flash
+  - model_name: gemini-3.8-flash
     litellm_params:
-      model: vertex_ai/gemini-3.7-flash 
+      model: vertex_ai/gemini-3.8-flash 
       vertex_project: "janitor-api-or-wtv"
       vertex_location: "global" 
  
