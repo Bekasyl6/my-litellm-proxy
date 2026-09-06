@@ -237,8 +237,20 @@ def inject_hasan(body: bytes):
 # START INTERNAL LITELLM
 # ============================================================
 
-async def wait_for_litellm():
-    for _ in range(60):
+async def wait_for_litellm(timeout_seconds=120):
+    attempts = timeout_seconds * 2
+
+    for _ in range(attempts):
+
+        process = getattr(app.state, "litellm_process", None)
+
+        # Если LiteLLM реально умер, сразу покажем это,
+        # вместо бессмысленного ожидания.
+        if process is not None and process.poll() is not None:
+            raise RuntimeError(
+                f"LiteLLM process exited with code {process.returncode}"
+            )
+
         try:
             reader, writer = await asyncio.open_connection(
                 "127.0.0.1",
@@ -247,16 +259,19 @@ async def wait_for_litellm():
 
             writer.close()
             await writer.wait_closed()
-            return
+
+            return True
 
         except Exception:
             await asyncio.sleep(0.5)
 
-    raise RuntimeError("LiteLLM failed to start")
+    return False
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+
+    print("[GATEKEEPER] Starting internal LiteLLM...", flush=True)
 
     process = subprocess.Popen([
         "litellm",
@@ -270,10 +285,12 @@ async def lifespan(app: FastAPI):
 
     app.state.litellm_process = process
 
-    await wait_for_litellm()
+    # КРИТИЧНО:
+    # здесь больше НЕ ждём LiteLLM.
+    # Uvicorn сразу завершает startup и открывает Render $PORT.
 
     print(
-        f"[GATEKEEPER] Active target: {TARGET_NETWORKS_RAW}",
+        f"[GATEKEEPER] Public proxy started. Target: {TARGET_NETWORKS_RAW}",
         flush=True
     )
 
