@@ -16,6 +16,15 @@ model_list:
       model: snowflake/claude-opus-5-5
       api_base: os.environ/SNOWFLAKE_API_BASE
       api_key: os.environ/SNOWFLAKE_API_KEY
+
+    - model_name: opus-direct
+    litellm_params:
+      model: openai/claude-opus-5-5
+      api_base: os.environ/SNOWFLAKE_CHAT_BASE
+      api_key: os.environ/SNOWFLAKE_PAT_RAW
+      extra_headers:
+        X-Snowflake-Authorization-Token-Type: PROGRAMMATIC_ACCESS_TOKEN
+      
  
 litellm_settings:
   drop_params: true
