@@ -10,6 +10,12 @@ model_list:
       model: vertex_ai/gemini-3.8-flash 
       vertex_project: "janitor-api-or-wtv"
       vertex_location: "global" 
+
+  - model_name: opus-snowflake
+    litellm_params:
+      model: snowflake/claude-opus-5-5
+      api_base: os.environ/SNOWFLAKE_API_BASE
+      api_key: os.environ/SNOWFLAKE_API_KEY
  
 litellm_settings:
   drop_params: true
